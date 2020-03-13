@@ -1,0 +1,22 @@
+version: '3'
+services:
+  web1:
+    image: i_nginx
+    container_name: c_nginx
+    ports:
+    - "80:80"
+    networks:
+      mynetwork:
+        ipv4_address: 172.28.1.1
+  web2:
+    image: i_ubuntu
+    container_name: c_nodejs
+    networks:
+      mynetwork:
+        ipv4_address: 172.28.1.2
+networks:
+  mynetwork:
+      ipam:
+          driver: default
+          config:
+              - subnet: 172.28.0.0/16

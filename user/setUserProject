@@ -1,0 +1,9 @@
+# remove user : sudo deluser deploy
+# uninstall docker : sudo apt remove docker
+# uninstall ansible : sudo apt remove ansible
+sudo useradd -s /bin/bash -d /home/deploy/ -m -G sudo -p deploy deploy
+sudo groupadd docker
+sudo usermod -aG docker deploy
+sudo apt-get install -y openssh-client
+sudo -c ( mkdir -p /home/deploy && (echo '/home/deploy/.shh/'; echo ; echo ;) | ssh-keygen -t rsa -b 1024 )
+

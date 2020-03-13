@@ -1,0 +1,11 @@
+---
+
+
+- hosts: nginx_servers
+  roles:
+    - role_nginx_server
+
+- hosts: nodejs_servers
+  roles:
+    - role_nodejs_server
+

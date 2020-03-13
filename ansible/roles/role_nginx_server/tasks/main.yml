@@ -1,0 +1,19 @@
+---
+# tasks file for role_nginx_server---
+- name: install common packages for all servers
+  apt: 
+    update_cache=yes
+    state=latest
+    name={{item}}
+  with_items: 
+  - curl
+  become: yes
+- name: template file index.html with server name
+  template:
+    ###src: /home/deploy/projets/projets_ansible/ansible/roles/role_nginx_server/templates/index.html
+    src: index.html
+    dest: /usr/share/nginx/html
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes

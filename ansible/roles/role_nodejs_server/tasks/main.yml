@@ -1,0 +1,39 @@
+---
+# tasks file for role_nodejs_server---
+- name: install git 
+  apt: 
+    update_cache=yes
+    name=git
+    state=latest
+  become: yes
+- name: install nodejs
+  apt:
+    name=nodejs
+    state=latest
+  become: yes
+- name: install npm
+  apt:
+    name=npm
+    state=latest
+  become: yes
+- name: Install "PM2" package globally.
+  npm:
+    name: pm2
+    global: yes
+  become: yes
+- name: Create a directory project if it does not exist
+  file:
+    path: /home/deploy/project_helloWorld
+    state: directory
+    mode: '0755'
+  become_user: deploy
+- name: get project from github
+  git:
+    repo: 'https://github.com/skeres/helloworld.git'
+    dest: /home/deploy/project_helloWorld
+  become_user: deploy
+- name: Change the working directory to nodejs projetc before excuting command.
+  shell: pm2 start app.js --name myApp
+  args:
+    chdir: /home/deploy/project_helloWorld
+  become_user: deploy
